@@ -1,0 +1,6 @@
+@HabitDuel.API_HostAddress = http://localhost:5096
+
+GET {{HabitDuel.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
