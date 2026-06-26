@@ -1,10 +1,9 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  // Menambahkan konfigurasi untuk mengabaikan linting saat build
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   eslint: {
+    // Ini akan mengabaikan error linting saat proses build
     ignoreDuringBuilds: true,
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
