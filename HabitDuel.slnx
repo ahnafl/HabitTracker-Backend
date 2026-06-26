@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="HabitDuel.API/HabitDuel.API.csproj" />
+  <Project Path="HabitDuel.Application/HabitDuel.Application.csproj" />
+  <Project Path="HabitDuel.Domain/HabitDuel.Domain.csproj" />
+  <Project Path="HabitDuel.Infrastructure/HabitDuel.Infrastructure.csproj" />
+</Solution>

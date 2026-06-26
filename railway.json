@@ -1,0 +1,8 @@
+{
+  "build": {
+    "command": "dotnet publish HabitDuel.sln -c Release -o out"
+  },
+  "deploy": {
+    "command": "./out/HabitDuel.API"
+  }
+}

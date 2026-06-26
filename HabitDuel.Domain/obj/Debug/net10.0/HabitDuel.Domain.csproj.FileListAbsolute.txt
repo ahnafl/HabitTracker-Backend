@@ -1,0 +1,11 @@
+C:\Users\windows\HabitDuel\HabitDuel.Domain\bin\Debug\net10.0\HabitDuel.Domain.deps.json
+C:\Users\windows\HabitDuel\HabitDuel.Domain\bin\Debug\net10.0\HabitDuel.Domain.dll
+C:\Users\windows\HabitDuel\HabitDuel.Domain\bin\Debug\net10.0\HabitDuel.Domain.pdb
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\HabitDuel.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\HabitDuel.Domain.AssemblyInfoInputs.cache
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\HabitDuel.Domain.AssemblyInfo.cs
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\HabitDuel.Domain.csproj.CoreCompileInputs.cache
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\HabitDuel.Domain.dll
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\refint\HabitDuel.Domain.dll
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\HabitDuel.Domain.pdb
+C:\Users\windows\HabitDuel\HabitDuel.Domain\obj\Debug\net10.0\ref\HabitDuel.Domain.dll

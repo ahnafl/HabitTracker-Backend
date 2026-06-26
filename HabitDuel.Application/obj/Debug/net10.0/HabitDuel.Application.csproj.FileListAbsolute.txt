@@ -1,0 +1,17 @@
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Application.deps.json
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Application.dll
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Application.pdb
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Domain.dll
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Infrastructure.dll
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Domain.pdb
+C:\Users\windows\HabitDuel\HabitDuel.Application\bin\Debug\net10.0\HabitDuel.Infrastructure.pdb
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.csproj.AssemblyReference.cache
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.AssemblyInfoInputs.cache
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.AssemblyInfo.cs
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.csproj.CoreCompileInputs.cache
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDue.A9B0E007.Up2Date
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.dll
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\refint\HabitDuel.Application.dll
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\HabitDuel.Application.pdb
+C:\Users\windows\HabitDuel\HabitDuel.Application\obj\Debug\net10.0\ref\HabitDuel.Application.dll
