@@ -20,7 +20,7 @@ export default function LoginPage() {
     setErrorMessage('');
 
     try {
-      console.log("Mengirim data login:", { username, password }); // Debug point 1
+      console.log("Mengirim data login:", { username, password }); 
 
       // Memanggil API
       const response = await authService.login({ username, password });
@@ -32,13 +32,14 @@ export default function LoginPage() {
         throw new Error('Respon tidak mengandung token');
       }
       
-    } catch (error: any) {
-      // DEBUGGING PENTING: Melihat apa yang sebenarnya dikirim backend
-      console.error("Error Detail dari Backend:", error.response?.data); 
+    } catch (error: unknown) {
+      // Perbaikan: Menggunakan 'unknown' dan type casting yang aman
+      const err = error as { response?: { data?: { message?: string; title?: string } } };
       
-      // Menangkap pesan spesifik dari backend jika ada
-      const message = error.response?.data?.message || 
-                      error.response?.data?.title || // Kadang .NET menggunakan 'title' untuk error 400
+      console.error("Error Detail dari Backend:", err.response?.data); 
+      
+      const message = err.response?.data?.message || 
+                      err.response?.data?.title || 
                       'Username atau password salah. Silakan coba lagi.';
       
       setErrorMessage(message);
