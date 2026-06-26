@@ -25,8 +25,10 @@ export default function RegisterPage() {
       
       alert('Pendaftaran berhasil! Silakan login.');
       router.push('/auth/login');
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || 'Gagal mendaftar.');
+    } catch (error: unknown) {
+      // Perbaikan: Mengubah 'any' menjadi 'unknown' dan melakukan type casting aman
+      const err = error as { response?: { data?: { message?: string } } };
+      setErrorMessage(err.response?.data?.message || 'Gagal mendaftar.');
     } finally {
       setIsLoading(false);
     }
