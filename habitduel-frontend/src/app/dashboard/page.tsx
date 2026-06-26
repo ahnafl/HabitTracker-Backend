@@ -6,10 +6,21 @@ import { getHabits, createHabit, updateHabit, deleteHabit, completeHabit, getHab
 import LogoutButton from '@/components/LogoutButton';
 import MiniHeatmap from '@/components/MiniHeatmap';
 
+// Definisi Interface untuk menghindari 'any'
+interface User {
+  username: string;
+}
+
+interface Stats {
+  completedLast7Days: number;
+  totalHabits: number;
+  completionRate: number;
+}
+
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [habits, setHabits] = useState<Habit[]>([]);
-  const [stats, setStats] = useState({ completedLast7Days: 0, totalHabits: 0, completionRate: 0 });
+  const [stats, setStats] = useState<Stats>({ completedLast7Days: 0, totalHabits: 0, completionRate: 0 });
   
   const [form, setForm] = useState({ title: '', description: '', isCompleted: false, targetDate: '' });
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -26,6 +37,7 @@ export default function DashboardPage() {
     }
   };
 
+  // Fungsi untuk memuat data
   const loadDashboardData = async () => {
     try {
       setLoading(true);
@@ -84,7 +96,6 @@ export default function DashboardPage() {
     setProcessingId(id);
     try {
       await completeHabit(id);
-      // Panggil ulang data agar heatmap terupdate
       await loadDashboardData();
     } catch (error) {
       alert("Gagal mengupdate.");
@@ -100,7 +111,6 @@ export default function DashboardPage() {
       <h1>Halo, {user?.username || 'User'}!</h1>
       <LogoutButton />
 
-      {/* Stats Section */}
       <section style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
         <div style={{ background: '#e3f2fd', padding: '15px', borderRadius: '10px', flex: 1, textAlign: 'center' }}>
           <div style={{ fontSize: '0.8em', color: '#666' }}>Selesai (7 Hari Terakhir)</div>
@@ -112,7 +122,6 @@ export default function DashboardPage() {
         </div>
       </section>
       
-      {/* Form Section */}
       <section style={{ marginTop: '30px' }}>
         <h2>{editingId ? 'Edit Habit' : 'Tambah Habit'}</h2>
         <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -142,7 +151,6 @@ export default function DashboardPage() {
           </button>
         </form>
 
-        {/* List Section */}
         <div style={{ display: 'grid', gap: '15px' }}>
           {habits.map((h) => (
             <div key={h.id} style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '12px', backgroundColor: h.isCompleted ? '#f0fdf4' : 'white' }}>
@@ -159,7 +167,6 @@ export default function DashboardPage() {
                     <h3 style={{ margin: 0 }}>{h.title}</h3>
                     {h.description && <p style={{ fontSize: '0.9em', color: '#666', margin: '4px 0 0 0' }}>{h.description}</p>}
                     
-                    {/* MiniHeatmap dengan proteksi || [] */}
                     <MiniHeatmap history={h.last7Days || []} />
 
                     {h.targetDate && (
