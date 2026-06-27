@@ -23,13 +23,10 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            // PERBAIKAN: Pastikan header CORS tetap terkirim saat server eror
-            if (!context.Response.Headers.ContainsKey("Access-Control-Allow-Origin"))
-            {
-                context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-                context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-                context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            }
+            // PERBAIKAN: Menggunakan sintaks [] yang 100% kompatibel di semua versi .NET
+            context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+            context.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
+            context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
