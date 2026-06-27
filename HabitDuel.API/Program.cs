@@ -86,30 +86,34 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// --- HTTP REQUEST PIPELINE ---
+// --- HTTP REQUEST PIPELINE (URUTAN SUDAH DIPERBAIKI) ---
 
-// A. CORS WAJIB DI ATAS AGAR MENANGKAP PREFLIGHT OPTIONS REQUEST
-app.UseCors("AllowAll");
-
-// B. Exception Handler Middleware
+// A. Exception Handler diletakkan paling atas untuk menangkap segala jenis eror di bawahnya
 app.UseMiddleware<ExceptionMiddleware>();
 
-// C. Swagger
+// B. ROUTING WAJIB DI ATAS CORS
+// Agar .NET mendeteksi rute endpoint tujuan terlebih dahulu sebelum mengecek hak akses keamanan
+app.UseRouting();
+
+// C. CORS TEPAT DI BAWAH ROUTING
+// Berfungsi mencegat request OPTIONS (Preflight) dari browser dan langsung mengembalikan status 200 OK + Header CORS
+app.UseCors("AllowAll");
+
+// D. Swagger (Hanya aktif di Development)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// D. HTTPS Redirection di-handle langsung oleh Cloudflare/Edge Gateway Railway
+// E. DI-NONAKTIFKAN karena HTTPS Redirection di-handle otomatis oleh Edge Gateway/Cloudflare milik Railway
 // app.UseHttpsRedirection();
 
-// E. Routing & Security
-app.UseRouting();
+// F. Security (Autentikasi Token & Hak Akses User)
 app.UseAuthentication();
 app.UseAuthorization();
 
-// F. Map Controllers
+// G. Eksekusi Akhir ke Controller API Anda
 app.MapControllers();
 
 app.Run();
