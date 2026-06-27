@@ -4,7 +4,9 @@ import Cookies from 'js-cookie';
 
 // Konfigurasi dasar
 const api = axios.create({
-  baseURL: 'http://localhost:5100/api', // Pastikan ini hanya sampai '/api'
+  baseURL: process.env.NEXT_PUBLIC_API_URL 
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api` 
+  : 'http://localhost:5100/api',
   headers: {
     'Content-Type': 'application/json', // Penting agar ASP.NET Core membaca [FromBody] dengan benar
   },
