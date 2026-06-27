@@ -1,5 +1,6 @@
 // src/services/axiosConfig.ts
 import axios from 'axios';
+import Cookies from 'js-cookie'; // Pastikan sudah mengimpor Cookies
 
 // 1. Ambil URL mentah dari env atau fallback ke localhost
 const rawUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5100';
@@ -18,9 +19,8 @@ const api = axios.create({
 // Menambahkan token ke header setiap kali ada request
 api.interceptors.request.use(
   (config) => {
-    // Catatan: Jika Anda menyimpan token di Cookies pada file api.ts, 
-    // disarankan gunakan Cookies.get('token') juga di sini agar konsisten.
-    const token = localStorage.getItem('token'); 
+    // Konsisten menggunakan Cookies agar sinkron dengan api.ts
+    const token = Cookies.get('token'); 
     
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
