@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.SetIsOriginAllowed(origin => true) // Mengizinkan semua origin secara dinamis
+        policy.SetIsOriginAllowed(origin => true) // Mengizinkan semua origin secara dinamis (Vercel, localhost, mobile)
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials(); // Mengizinkan pengiriman token/cookies jika diperlukan frontend
@@ -86,27 +86,26 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// --- HTTP REQUEST PIPELINE (URUTAN SUDAH DIPERBAIKI) ---
+// --- HTTP REQUEST PIPELINE (URUTAN SUDAH SANGAT TEPAT) ---
 
 // A. Exception Handler diletakkan paling atas untuk menangkap segala jenis eror di bawahnya
 app.UseMiddleware<ExceptionMiddleware>();
 
 // B. ROUTING WAJIB DI ATAS CORS
-// Agar .NET mendeteksi rute endpoint tujuan terlebih dahulu sebelum mengecek hak akses keamanan
 app.UseRouting();
 
 // C. CORS TEPAT DI BAWAH ROUTING
-// Berfungsi mencegat request OPTIONS (Preflight) dari browser dan langsung mengembalikan status 200 OK + Header CORS
 app.UseCors("AllowAll");
 
-// D. Swagger (Hanya aktif di Development)
-if (app.Environment.IsDevelopment())
+// D. Swagger (Diaktifkan untuk semua environment sementara waktu agar Anda bisa tes endpoint live Railway Anda)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "HabitDuel API v1");
+    c.RoutePrefix = string.Empty; // Membuat Swagger muncul saat membuka URL utama Railway Anda
+});
 
-// E. DI-NONAKTIFKAN karena HTTPS Redirection di-handle otomatis oleh Edge Gateway/Cloudflare milik Railway
+// E. DI-NONAKTIFKAN karena HTTPS Redirection di-handle otomatis oleh Edge Gateway Railway
 // app.UseHttpsRedirection();
 
 // F. Security (Autentikasi Token & Hak Akses User)
