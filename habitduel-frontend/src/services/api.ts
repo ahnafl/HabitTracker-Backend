@@ -2,11 +2,16 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+// 1. Ambil URL mentah dari env atau fallback ke localhost
+const rawUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5100';
+
+// 2. Bersihkan URL dari typo double-dot (..) atau trailing slash (/) di ujung string
+const cleanUrl = rawUrl.replace(/\.\./g, '.').replace(/\/$/, '');
+
 // Konfigurasi dasar
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL 
-  ? `${process.env.NEXT_PUBLIC_API_URL}/api` 
-  : 'http://localhost:5100/api',
+  baseURL: `${cleanUrl}/api`,
+  withCredentials: true, // WAJIB TRUE agar sinkron dengan .AllowCredentials() di backend .NET Anda!
   headers: {
     'Content-Type': 'application/json', // Penting agar ASP.NET Core membaca [FromBody] dengan benar
   },
@@ -41,7 +46,7 @@ api.interceptors.response.use(
       // Bisa ditambahkan penanganan error lain (403 Forbidden, 500 Server Error, dll)
     } else {
       // Error jaringan (server mati/tidak bisa dijangkau)
-      console.error("Network Error: Pastikan Backend .NET berjalan.");
+      console.error("Network Error: Pastikan Backend .NET berjalan dan CORS diizinkan.");
     }
     
     return Promise.reject(error);
