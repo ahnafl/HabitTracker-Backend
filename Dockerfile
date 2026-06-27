@@ -1,5 +1,5 @@
-# Tahap 1: Pembangunan Aplikasi (Build)
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Tahap 1: Pembangunan Aplikasi (Build) menggunakan .NET 9.0
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Salin seluruh isi folder monorepo ke dalam container
@@ -9,8 +9,8 @@ COPY . .
 RUN dotnet restore "HabitDuel.API/HabitDuel.API.csproj"
 RUN dotnet publish "HabitDuel.API/HabitDuel.API.csproj" -c Release -o /app/publish
 
-# Tahap 2: Menjalankan Aplikasi (Runtime)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# Tahap 2: Menjalankan Aplikasi (Runtime) menggunakan .NET 9.0
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
