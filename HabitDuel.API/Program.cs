@@ -86,34 +86,36 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// --- HTTP REQUEST PIPELINE ---
+// --- HTTP REQUEST PIPELINE (PERBAIKAN DI SINI) ---
 
-// 6. Exception Handler (Wajib paling atas)
+// A. CORS HARUS PALING ATAS
+// Memastikan request preflight (OPTIONS) dan response error dari middleware di bawahnya tetap membawa header CORS
+app.UseCors("AllowAll");
+
+// B. Exception Handler 
 app.UseMiddleware<ExceptionMiddleware>();
 
-// 7. Swagger
+// C. Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// D. DI-NONAKTIFKAN / DI-KOMENTAR KARENA HTTPS REDIRECTION DI-HANDLE OTOMATIS OLEH GATEWAY RAILWAY
+// app.UseHttpsRedirection();
 
-// 8. Routing & CORS (Wajib sebelum Auth/Controller)
+// E. Routing & Security
 app.UseRouting();
-app.UseCors("AllowAll");
-
-// 9. Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 10. Map Controllers
+// F. Map Controllers
 app.MapControllers();
 
 app.Run();
 
-// --- Helper Class (Opsional: Pindahkan ke file terpisah nantinya) ---
+// --- Helper Class ---
 public class DateOnlyJsonConverter : JsonConverter<DateOnly>
 {
     private readonly string serializationFormat = "yyyy-MM-dd";
