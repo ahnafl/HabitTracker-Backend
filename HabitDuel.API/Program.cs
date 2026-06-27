@@ -25,18 +25,18 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        // Penting: Mengatasi masalah siklus data pada Entity Framework
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
-// 3. CORS Policy
+// 3. CORS Policy (Dioptimalkan agar Kebal Eror Preflight & Credentials)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.SetIsOriginAllowed(origin => true) // Mengizinkan semua origin secara dinamis
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials(); // Mengizinkan pengiriman token/cookies jika diperlukan frontend
     });
 });
 
@@ -86,13 +86,12 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// --- HTTP REQUEST PIPELINE (PERBAIKAN DI SINI) ---
+// --- HTTP REQUEST PIPELINE ---
 
-// A. CORS HARUS PALING ATAS
-// Memastikan request preflight (OPTIONS) dan response error dari middleware di bawahnya tetap membawa header CORS
+// A. CORS WAJIB DI ATAS AGAR MENANGKAP PREFLIGHT OPTIONS REQUEST
 app.UseCors("AllowAll");
 
-// B. Exception Handler 
+// B. Exception Handler Middleware
 app.UseMiddleware<ExceptionMiddleware>();
 
 // C. Swagger
@@ -102,7 +101,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// D. DI-NONAKTIFKAN / DI-KOMENTAR KARENA HTTPS REDIRECTION DI-HANDLE OTOMATIS OLEH GATEWAY RAILWAY
+// D. HTTPS Redirection di-handle langsung oleh Cloudflare/Edge Gateway Railway
 // app.UseHttpsRedirection();
 
 // E. Routing & Security

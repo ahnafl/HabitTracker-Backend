@@ -1,20 +1,20 @@
-# Tahap 1: Pembangunan Aplikasi (Build) menggunakan .NET 9.0
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+# Tahap 1: Pembangunan Aplikasi menggunakan SDK .NET 10.0 (Tahun 2026)
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Salin seluruh isi folder monorepo ke dalam container
+# Salin seluruh struktur Monorepo agar referensi antar-proyek tidak hilang
 COPY . .
 
-# Jalankan restore dan publish khusus untuk proyek backend API Anda
+# Jalankan restore & publish khusus untuk API utama
 RUN dotnet restore "HabitDuel.API/HabitDuel.API.csproj"
 RUN dotnet publish "HabitDuel.API/HabitDuel.API.csproj" -c Release -o /app/publish
 
-# Tahap 2: Menjalankan Aplikasi (Runtime) menggunakan .NET 9.0
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+# Tahap 2: Lingkungan Runtime menggunakan ASP.NET 10.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Memaksa .NET mendengarkan port 8080 (Port bawaan Railway)
+# Port default yang dibaca sistem Railway
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
 
